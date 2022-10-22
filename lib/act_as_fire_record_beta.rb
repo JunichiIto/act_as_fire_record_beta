@@ -43,8 +43,8 @@ module ActAsFireRecordBeta
       client.doc("#{collection_name_with_env}/#{id}")
     end
 
-    def all(&block)
-      col.find_many(&block)
+    def all
+      col.get_records
     end
 
     def find(id)
@@ -55,14 +55,14 @@ module ActAsFireRecordBeta
     end
 
     def find_by(param)
-      raise ArgumentError, "param size should 1: #{param}" unless param.size == 1
+      raise ArgumentError, "param size should be 1: #{param}" unless param.size == 1
       field, value = param.to_a.flatten
 
-      col.where(field, :==, value).limit(1).get do |data|
-        return to_instance(data)
-      end
+      where(field, :==, value).first
+    end
 
-      nil
+    def find_by!(param)
+      find_by(param) || raise(ActiveRecord::RecordNotFound)
     end
 
     def where(field, operator, value)
@@ -74,7 +74,7 @@ module ActAsFireRecordBeta
     end
 
     def first(limit = 1)
-      records = col.find_many(limit: limit)
+      records = col.get_records(limit: limit)
       limit == 1 ? records[0] : records
     end
 

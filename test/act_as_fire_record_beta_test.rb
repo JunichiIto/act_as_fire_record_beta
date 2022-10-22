@@ -29,6 +29,10 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
     assert DummyModel.respond_to?(:find_by)
   end
 
+  test '.find_by!' do
+    assert DummyModel.respond_to?(:find_by!)
+  end
+
   test '.where' do
     assert DummyModel.respond_to?(:where)
   end
