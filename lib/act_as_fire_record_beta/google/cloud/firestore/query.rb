@@ -3,10 +3,10 @@ module Google
     module Firestore
       class Query
         def get_records(limit: nil)
+          model_class = ActAsFireRecordBeta.class_mapping[query.from[0].collection_id]
           scope = limit ? limit(limit) : self
           scope.get.map do |data|
-            model_lass = ActAsFireRecordBeta.class_mapping[query.from[0].collection_id]
-            model_lass.to_instance(data)
+            model_class.to_instance(data)
           end
         end
 
