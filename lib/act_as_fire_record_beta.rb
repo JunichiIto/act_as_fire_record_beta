@@ -22,7 +22,8 @@ module ActAsFireRecordBeta
     attribute :id, :string
     attribute :created_at, :time
     attribute :updated_at, :time
-    attribute :doc_ref
+
+    attr_accessor :doc_ref
 
     ActAsFireRecordBeta.class_mapping[collection_name_with_env] = self
   end
@@ -117,12 +118,11 @@ module ActAsFireRecordBeta
         id: data.document_id,
         created_at: data.created_at,
         updated_at: data.updated_at,
-        doc_ref: data,
       }
       @_firestore_attributes.each do |key|
         params[key] = data[key]
       end
-      new(params)
+      new(params).tap { |record| record.doc_ref = data }
     end
 
     private
@@ -178,6 +178,13 @@ module ActAsFireRecordBeta
   def destroy
     doc.delete
     true
+  end
+
+  # Override
+  def inspect
+    hash = attributes.transform_keys(&:to_sym)
+    hash_text = hash.to_s[1..-2]
+    "#<#{self.class} #{hash_text}>"
   end
 
   private
