@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.0.5] - 2022-10-23
+
+- Fix default value bug
+
 ## [0.0.4] - 2022-10-23
 
 - Use firestore_attribute instead of firestore_attributes
