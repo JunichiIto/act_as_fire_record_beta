@@ -22,6 +22,7 @@ module ActAsFireRecordBeta
     attribute :id, :string
     attribute :created_at, :time
     attribute :updated_at, :time
+    attribute :doc_ref
 
     ActAsFireRecordBeta.class_mapping[collection_name_with_env] = self
   end
@@ -91,7 +92,20 @@ module ActAsFireRecordBeta
     end
 
     def destroy_all
-      col.list_documents.each(&:delete)
+      delete_in_batch(col.list_documents)
+    end
+
+    def delete_in_batch(doc_refs)
+      max_batch_size = 500
+      nested_doc_refs = doc_refs.each_slice(max_batch_size)
+      firestore = Google::Cloud::Firestore.new
+      nested_doc_refs.each do |doc_refs|
+        firestore.batch do |b|
+          doc_refs.each do |doc_ref|
+            b.delete(doc_ref)
+          end
+        end
+      end
     end
 
     def save_params(record)
@@ -103,6 +117,7 @@ module ActAsFireRecordBeta
         id: data.document_id,
         created_at: data.created_at,
         updated_at: data.updated_at,
+        doc_ref: data,
       }
       @_firestore_attributes.each do |key|
         params[key] = data[key]

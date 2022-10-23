@@ -3,15 +3,15 @@ module Google
     module Firestore
       class Query
         def get_records(limit: nil)
-          model_class = ActAsFireRecordBeta.class_mapping[query.from[0].collection_id]
           scope = limit ? limit(limit) : self
           scope.get.map do |data|
-            model_class.to_instance(data)
+            fire_record_class.to_instance(data)
           end
         end
 
         def destroy_all
-          get_records.each(&:destroy)
+          doc_refs = get_records.map(&:doc_ref)
+          fire_record_class.delete_in_batch(doc_refs)
         end
 
         def first(limit = 1)
@@ -21,6 +21,10 @@ module Google
 
         def exists?
           !!first
+        end
+
+        def fire_record_class
+          @_fire_record_class ||= ActAsFireRecordBeta.class_mapping[query.from[0].collection_id]
         end
       end
     end

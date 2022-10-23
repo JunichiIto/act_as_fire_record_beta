@@ -66,6 +66,7 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
     assert model.respond_to?(:id)
     assert model.respond_to?(:updated_at)
     assert model.respond_to?(:created_at)
+    assert model.respond_to?(:doc_ref)
   end
 
   test '#new_record?' do
