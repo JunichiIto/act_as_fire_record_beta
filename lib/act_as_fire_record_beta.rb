@@ -32,9 +32,16 @@ module ActAsFireRecordBeta
     extend Forwardable
     delegate :logger => Rails
 
-    def firestore_attributes(*names)
+    # Copied from activemodel-7.0.4/lib/active_model/attributes.rb
+    NO_DEFAULT_PROVIDED = Object.new
+
+    def firestore_attribute(name, cast_type = nil, default: NO_DEFAULT_PROVIDED, **options)
+      attribute(name, cast_type, default: default, **options)
+      firestore_attributes << name.to_sym
+    end
+
+    def firestore_attributes
       @_firestore_attributes ||= []
-      @_firestore_attributes += names.map(&:to_sym)
     end
 
     def col

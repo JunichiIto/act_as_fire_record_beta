@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.0.4] - 2022-10-23
+
+- Use firestore_attribute instead of firestore_attributes
+
 ## [0.0.3] - 2022-10-23
 
 - Run destroy_all in batch
