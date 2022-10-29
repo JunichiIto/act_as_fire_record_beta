@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.0.6] - 2022-10-29
+
+- Use custom error classes
+
 ## [0.0.5] - 2022-10-23
 
 - Fix default value bug

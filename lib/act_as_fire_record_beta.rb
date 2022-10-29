@@ -1,6 +1,7 @@
 require "google/cloud/firestore"
 require "act_as_fire_record_beta/version"
 require "act_as_fire_record_beta/railtie"
+require "act_as_fire_record_beta/errors"
 
 module ActAsFireRecordBeta
   extend ActiveSupport::Concern
@@ -58,20 +59,20 @@ module ActAsFireRecordBeta
 
     def find(id)
       data = doc(id).get
-      raise ActiveRecord::RecordNotFound if data.missing?
+      raise ActAsFireRecordBeta::RecordNotFound, "Couldn't find record with #{self} with 'id'='#{id}'" if data.missing?
 
       to_instance(data)
     end
 
     def find_by(param)
-      raise ArgumentError, "param size should be 1: #{param}" unless param.size == 1
+      raise ::ArgumentError, "param size should be 1: #{param}" unless param.size == 1
       field, value = param.to_a.flatten
 
       where(field, :==, value).first
     end
 
     def find_by!(param)
-      find_by(param) || raise(ActiveRecord::RecordNotFound)
+      find_by(param) || raise(ActAsFireRecordBeta::RecordNotFound, "Couldn't find #{self} with '#{param.to_a[0][0]}'=#{param.to_a[0][1].inspect}")
     end
 
     def where(field, operator, value)
@@ -156,7 +157,7 @@ module ActAsFireRecordBeta
   end
 
   def save
-    raise "insert only." unless new_record?
+    raise ActAsFireRecordBeta::OperationNotSupported, "insert only." unless new_record?
     return false if invalid?
 
     ref = col.add(save_params)
@@ -166,7 +167,7 @@ module ActAsFireRecordBeta
   end
 
   def save!
-    save || raise(ActiveRecord::RecordNotSaved.new("Failed to save the record", self))
+    save || raise(ActAsFireRecordBeta::RecordNotSaved, "Failed to save the record")
   end
 
   def update(params)
@@ -179,7 +180,7 @@ module ActAsFireRecordBeta
   end
 
   def update!(params)
-    update(params) || raise(ActiveRecord::RecordNotSaved.new("Failed to save the record", self))
+    update(params) || raise(ActAsFireRecordBeta::RecordNotSaved, "Failed to save the record")
   end
 
   def destroy
