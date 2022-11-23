@@ -26,7 +26,7 @@ module Google
         test '#destroy_all' do
           Book.where(:page, :>=, 220).destroy_all
 
-          books = Book.all
+          books = Book.all.get_records
           assert_equal [@book_1.id], books.map(&:id)
         end
 

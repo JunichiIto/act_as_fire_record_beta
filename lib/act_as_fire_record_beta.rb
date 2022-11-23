@@ -48,13 +48,10 @@ module ActAsFireRecordBeta
     def col
       @_col ||= client.col(collection_name_with_env)
     end
+    alias all col
 
     def doc(id)
       client.doc("#{collection_name_with_env}/#{id}")
-    end
-
-    def all
-      col.get_records
     end
 
     def find(id)

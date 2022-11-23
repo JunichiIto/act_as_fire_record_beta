@@ -1,4 +1,6 @@
 ## Next
+- `all` returns `Google::Cloud::Firestore::CollectionReference` object. `get_records` is required to fetch data from Firestore.
+
 ## v0.0.7 - 2022-11-23
 
 - Add authorization = 'Bearer owner' for Firestore Emulator

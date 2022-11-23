@@ -68,7 +68,7 @@ Finder examples:
 ```ruby
 book = Book.find_by(title: 'An Awesome Book')
 
-books = Book.all 
+books = Book.all.get_records 
 
 books = Book.order(:title).get_records
 books = Book.order(:title, :desc).get_records
