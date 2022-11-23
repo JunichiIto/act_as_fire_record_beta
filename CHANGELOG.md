@@ -1,4 +1,5 @@
 ## Next
+## v0.0.7 - 2022-11-23
 
 - Add authorization = 'Bearer owner' for Firestore Emulator
 
