@@ -4,7 +4,7 @@
 
 このgemを使う前に、以下の点に注意してください。
 
-- このgemはあくまでActiveRecord風のAPIを提供しているだけであり、ActiveRecordと完全な互換性があるわけではありません。そのため、ActiveStorageやDeviseなど、ActiveRecordの使用を前提としたgemやフレームワークをFirestoreに置き換えることはできません。
+- このgemはあくまでActiveRecord風のAPIを提供しているだけであり、ActiveRecordと完全な互換性があるわけではありません。そのため、ActiveStorageやDevise、Kaminariなど、ActiveRecordの使用を前提としたgemやフレームワークをFirestoreに置き換えることはできません。
 - FirestoreはいわゆるNoSQLであるため、RDBMSとは根本的に異なるデータ設計を考える必要があります。このgemを使ってActiveRecord風のAPIを手に入れたとしても、根本的なデータ設計についてはNoSQLのベストプラクティスに従う必要があります。
 
 ## Installation
