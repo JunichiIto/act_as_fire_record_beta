@@ -1,4 +1,5 @@
 ## Next
+## v0.0.8 - 2022-11-24
 - `all` returns `Google::Cloud::Firestore::CollectionReference` object. `get_records` is required to fetch data from Firestore.
 
 ## v0.0.7 - 2022-11-23
