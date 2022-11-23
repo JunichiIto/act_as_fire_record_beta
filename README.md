@@ -3,6 +3,25 @@
 - Provides Rails applications with an ActiveRecord-like interface to manipulate Firestore.
 - Works as a wrapper for the [google-cloud-firestore](https://rubygems.org/gems/google-cloud-firestore) gem.
 
+## Installation
+Add this line to your application's Gemfile:
+
+```ruby
+gem "act_as_fire_record_beta"
+```
+
+And then execute:
+```bash
+$ bundle
+```
+
+Or install it yourself as:
+```bash
+$ gem install act_as_fire_record_beta
+```
+
+## Overview 
+
 Model example:
 
 ```ruby
@@ -31,25 +50,22 @@ CRUD example:
 # Create
 book = Book.new(title: 'An Awesome Book', published_on: '2022-12-01'.to_date, page: 200)
 book.save
-book.title #=> 'An Awesome Book'
+bool.id #=> IdG0ZWT0I5DucEQuRgoP
+
+# Read
+id = 'IdG0ZWT0I5DucEQuRgoP'
+book = Book.find(id)
 
 # Update
 book.update(page: 210)
 
 # Delete
 book.destroy
-
-# Read
-id = 'IdG0ZWT0I5DucEQuRgoP'
-book = Book.find(id)
 ```
 
 Finder examples:
 
 ```ruby
-id = 'IdG0ZWT0I5DucEQuRgoP'
-book = Book.find(id)
-
 book = Book.find_by(title: 'An Awesome Book')
 
 books = Book.all 
@@ -65,23 +81,6 @@ Please refer test codes for other APIs.
 
 - https://github.com/JunichiIto/act_as_fire_record_beta/blob/main/test/act_as_fire_record_beta_test.rb
 - https://github.com/JunichiIto/act_as_fire_record_beta/blob/main/test/google/cloud/firestore/query_test.rb
-
-## Installation
-Add this line to your application's Gemfile:
-
-```ruby
-gem "act_as_fire_record_beta"
-```
-
-And then execute:
-```bash
-$ bundle
-```
-
-Or install it yourself as:
-```bash
-$ gem install act_as_fire_record_beta
-```
 
 ## Setup, usage and etc.
 

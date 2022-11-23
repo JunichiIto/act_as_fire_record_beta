@@ -101,26 +101,23 @@ end
 # Create
 book = Book.new(title: 'An Awesome Book', published_on: '2022-12-01'.to_date, page: 200)
 book.save
-book.title #=> 'An Awesome Book'
+book.id #=> IdG0ZWT0I5DucEQuRgoP
+
+# Read
+id = 'IdG0ZWT0I5DucEQuRgoP'
+book = Book.find(id)
 
 # Update
 book.update(page: 210)
 
 # Delete
 book.destroy
-
-# Read
-id = 'IdG0ZWT0I5DucEQuRgoP'
-book = Book.find(id)
 ```
 
 ### Finder methods 
 検索メソッドの使用例です。
 
 ```ruby
-id = 'IdG0ZWT0I5DucEQuRgoP'
-book = Book.find(id)
-
 book = Book.find_by(title: 'An Awesome Book')
 
 books = Book.all 
@@ -145,7 +142,7 @@ books = Book.where(:page, :>=, 200).order(:page).get_records
 
 ## テストコードを書く場合の注意点
 
-RDBMSを使ったテストとは異なり、テストで使用したデータは自動的に削除されません。必要に応じてデータを削除してください。
+RDBMSを使ったテストとは異なり、テストで使用したデータは自動的に削除されません。必要に応じて不要なデータを削除してください。
 
 ```ruby 
 require "test_helper"
@@ -179,7 +176,7 @@ end
 
 ## CIでテストを動かす場合の設定例
 
-GitHub Actions上でFirebase Emulatorを使用する設定例を[こちらのWikiページ](https://github.com/JunichiIto/act_as_fire_record_beta/wiki/GitHub-Actions-example)にまとめてあります。
+GitHub Actions上でFirebase Emulatorを使用する設定例を[こちらのWikiページ](https://github.com/JunichiIto/act_as_fire_record_beta/wiki/GitHub-Actions-example)に載せています。
 
 ## TODOs 
 
