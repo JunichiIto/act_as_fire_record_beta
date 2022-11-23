@@ -65,7 +65,7 @@ $ gem install act_as_fire_record_beta
 
 As of now, Japanese document is only available.
 
-[README-ja.md](https://github.com/JunichiIto/act_as_fire_record_beta/blob/main/CHANGELOG-ja.md)
+[README-ja.md](https://github.com/JunichiIto/act_as_fire_record_beta/blob/main/README-ja.md)
 
 ## Contributing
 Contribution directions go here.
