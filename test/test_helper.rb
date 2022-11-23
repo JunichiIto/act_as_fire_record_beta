@@ -1,5 +1,6 @@
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
+ENV["FIRESTORE_EMULATOR_HOST"] = "127.0.0.1:8080"
 
 require_relative "../test/dummy/config/environment"
 ActiveRecord::Migrator.migrations_paths = [File.expand_path("../test/dummy/db/migrate", __dir__)]
