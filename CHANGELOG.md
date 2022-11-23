@@ -1,26 +1,28 @@
-## [Unreleased]
+## Next
 
-## [0.0.6] - 2022-10-29
+- Add authorization = 'Bearer owner' for Firestore Emulator
+
+## v0.0.6 - 2022-10-29
 
 - Use custom error classes
 
-## [0.0.5] - 2022-10-23
+## v0.0.5 - 2022-10-23
 
 - Fix default value bug
 
-## [0.0.4] - 2022-10-23
+## v0.0.4 - 2022-10-23
 
 - Use firestore_attribute instead of firestore_attributes
 
-## [0.0.3] - 2022-10-23
+## v0.0.3 - 2022-10-23
 
 - Run destroy_all in batch
 - Override inspect method 
 
-## [0.0.2] - 2022-10-23
+## v0.0.2 - 2022-10-23
 
 - Organize query methods 
 
-## [0.0.1] - 2022-10-22
+## v0.0.1 - 2022-10-22
 
 - Initial release
