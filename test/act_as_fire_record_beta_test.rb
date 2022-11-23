@@ -19,8 +19,8 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.all' do
-    book_1 = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
-    book_2 = Book.create!(title: 'XYZ', published_on: '2022-12-01'.to_date, page: 200)
+    book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-01'.to_date, page: 200)
 
     books = Book.all.sort_by(&:title)
     assert_equal 2, books.size
@@ -36,10 +36,10 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.find_by' do
-    book_1 = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
-    book_2 = Book.create!(title: 'XYZ', published_on: '2022-12-02'.to_date, page: 210)
+    book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
 
-    found_book = Book.find_by(title: 'ABC')
+    found_book = Book.find_by(title: 'A Day In The Life')
     assert_equal book_1.id, found_book.id
 
     found_book = Book.find_by(published_on: '2022-12-02'.to_date)
@@ -52,10 +52,10 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.find_by!' do
-    book_1 = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
-    book_2 = Book.create!(title: 'XYZ', published_on: '2022-12-02'.to_date, page: 210)
+    book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
 
-    found_book = Book.find_by!(title: 'ABC')
+    found_book = Book.find_by!(title: 'A Day In The Life')
     assert_equal book_1.id, found_book.id
 
     assert_raises ActAsFireRecordBeta::RecordNotFound do
@@ -64,10 +64,10 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.where' do
-    book_1 = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
-    book_2 = Book.create!(title: 'XYZ', published_on: '2022-12-02'.to_date, page: 210)
+    book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
 
-    books = Book.where(:title, :==, 'ABC').get_records
+    books = Book.where(:title, :==, 'A Day In The Life').get_records
     assert_equal 1, books.size
     assert_equal book_1.id, books[0].id
 
@@ -82,8 +82,8 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.order' do
-    book_1 = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
-    book_2 = Book.create!(title: 'XYZ', published_on: '2022-12-02'.to_date, page: 210)
+    book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
 
     books = Book.order(:title).get_records
     assert_equal 2, books.size
@@ -97,7 +97,7 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.first' do
-    book = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
+    book = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
 
     found_book = Book.first
     assert_equal book.id, found_book.id
@@ -122,8 +122,8 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.destroy_all' do
-    Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
-    Book.create!(title: 'XYZ', published_on: '2022-12-02'.to_date, page: 210)
+    Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
     assert_equal 2, Book.all.count
 
     Book.destroy_all
@@ -135,14 +135,14 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test 'default attributes' do
-    book = Book.create!(title: 'ABC', published_on: '2022-12-01'.to_date, page: 200)
+    book = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
 
     assert_instance_of String, book.id
     assert_nil book.created_at
     assert_nil book.updated_at
     assert_nil book.doc_ref
 
-    found_book = Book.find_by(title: 'ABC')
+    found_book = Book.find_by(title: 'A Day In The Life')
     assert_equal book.id, found_book.id
     assert_instance_of Time, found_book.created_at
     assert_instance_of Time, found_book.updated_at
@@ -237,5 +237,10 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
 
   test '#logger' do
     assert_instance_of ActiveSupport::Logger, Book.new.logger
+  end
+
+  test 'validation callbacks' do
+    book = Book.create!(title: 'an awesome book', published_on: '2022-12-01'.to_date, page: 200)
+    assert_equal 'An Awesome Book', book.title
   end
 end

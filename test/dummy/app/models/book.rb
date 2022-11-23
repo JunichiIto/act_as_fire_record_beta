@@ -6,4 +6,12 @@ class Book
   firestore_attribute :page, :integer
 
   validates :title, presence: true
+
+  before_validation :titleize_title
+
+  private
+
+  def titleize_title
+    self.title = title.to_s.titleize
+  end
 end
