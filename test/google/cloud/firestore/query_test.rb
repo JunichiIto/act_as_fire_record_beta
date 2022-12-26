@@ -11,6 +11,20 @@ module Google
           @book_3 = Book.create!(title: 'My 3rd book', published_on: '2022-12-03'.to_date, page: 230)
         end
 
+        test '#[]' do
+          books = Book.order(:title)
+          assert_equal @book_1.id, books[0].id
+          assert_equal @book_2.id, books[1].id
+          assert_equal @book_3.id, books[2].id
+          assert_nil books[3]
+        end
+
+        test '#size' do
+          books = Book.where(:page, :>=, 220)
+          assert_equal 2, books.size
+          assert_equal 2, books.length
+        end
+
         test '#destroy_all' do
           Book.where(:page, :>=, 220).destroy_all
 
