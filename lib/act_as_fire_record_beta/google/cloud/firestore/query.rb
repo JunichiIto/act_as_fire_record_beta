@@ -6,9 +6,11 @@ module Google
 
         def each(&b)
           records = get.map do |data|
-            fire_record_class.to_instance(data)
+            record = fire_record_class.to_instance(data)
+            b.call(record) if b
+            record
           end
-          records.each(&b)
+          b ? records : records.each
         end
 
         def [](nth)
