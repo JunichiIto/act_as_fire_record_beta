@@ -85,6 +85,10 @@ module ActAsFireRecordBeta
       limit == 1 ? records[0] : records
     end
 
+    def count
+      all.count
+    end
+
     def create(params)
       record = new(params)
       record.save
