@@ -4,6 +4,18 @@ module Google
       class Query
         include Enumerable
 
+        def method_missing(symbol, *args)
+          if respond_to_missing?(symbol, false)
+            self.to_a.send(symbol, *args)
+          else
+            super
+          end
+        end
+
+        def respond_to_missing?(sym, _include_private)
+          [].respond_to?(sym) ? true : super
+        end
+
         def each(&b)
           records = get.map do |data|
             record = fire_record_class.to_instance(data)
@@ -12,15 +24,6 @@ module Google
           end
           b ? records : records.each
         end
-
-        def [](nth)
-          self.to_a[nth]
-        end
-
-        def size
-          self.to_a.size
-        end
-        alias length size
 
         def destroy_all
           doc_refs = self.map(&:doc_ref)

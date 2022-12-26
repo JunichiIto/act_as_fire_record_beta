@@ -11,18 +11,40 @@ module Google
           @book_3 = Book.create!(title: 'My 3rd book', published_on: '2022-12-03'.to_date, page: 230)
         end
 
-        test '#[]' do
+        test '#method_missing' do
+          # []
           books = Book.order(:title)
+          assert books.respond_to?(:[])
           assert_equal @book_1.id, books[0].id
           assert_equal @book_2.id, books[1].id
           assert_equal @book_3.id, books[2].id
           assert_nil books[3]
-        end
 
-        test '#size' do
+          # size/length
           books = Book.where(:page, :>=, 220)
+          assert books.respond_to?(:size)
           assert_equal 2, books.size
+          assert books.respond_to?(:length)
           assert_equal 2, books.length
+
+          # empty?
+          books = Book.where(:page, :>=, 220)
+          assert books.respond_to?(:empty?)
+          refute books.empty?
+          books = Book.where(:page, :>, 230)
+          assert books.empty?
+
+          # blank?
+          books = Book.where(:page, :>=, 220)
+          assert books.respond_to?(:blank?)
+          refute books.blank?
+          books = Book.where(:page, :>, 230)
+          assert books.blank?
+
+          # NoMethodError
+          books = Book.order(:title)
+          refute books.respond_to?(:hoge)
+          assert_raises(NoMethodError) { books.hoge }
         end
 
         test '#destroy_all' do
@@ -40,6 +62,12 @@ module Google
           book_ids = [@book_2, @book_3].map(&:id)
           found_ids = books.map(&:id)
           assert_equal book_ids, found_ids
+
+          book = Book.where(:page, :>, 230).first
+          assert_nil book
+
+          books = Book.where(:page, :>, 230).first(2)
+          assert_empty books
         end
 
         test '#exists?' do
