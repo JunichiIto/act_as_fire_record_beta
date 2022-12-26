@@ -68,13 +68,13 @@ Finder examples:
 ```ruby
 book = Book.find_by(title: 'An Awesome Book')
 
-books = Book.all.get_records 
+books = Book.all
 
-books = Book.order(:title).get_records
-books = Book.order(:title, :desc).get_records
+books = Book.order(:title)
+books = Book.order(:title, :desc)
 
-books = Book.where(:page, :>=, 200).get_records
-books = Book.where(:page, :>=, 200).order(:page).get_records
+books = Book.where(:page, :>=, 200)
+books = Book.where(:page, :>=, 200).order(:page)
 ```
 
 Please refer test codes for other APIs.
@@ -87,6 +87,10 @@ Please refer test codes for other APIs.
 As of now, Japanese document is only available.
 
 [README-ja.md](https://github.com/JunichiIto/act_as_fire_record_beta/blob/main/README-ja.md)
+
+Google translate might help you.
+
+[Auto-translated README-ja.md](https://github-com.translate.goog/JunichiIto/act_as_fire_record_beta/blob/main/README-ja.md?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=ja&_x_tr_pto=wapp)
 
 ## Contributing
 Contribution directions go here.
