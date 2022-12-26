@@ -2,20 +2,31 @@ module Google
   module Cloud
     module Firestore
       class Query
-        def get_records(limit: nil)
-          scope = limit ? limit(limit) : self
-          scope.get.map do |data|
+        include Enumerable
+
+        def each(&)
+          records = get.map do |data|
             fire_record_class.to_instance(data)
           end
+          records.each(&)
         end
 
+        def [](nth)
+          self.to_a[nth]
+        end
+
+        def size
+          self.to_a.size
+        end
+        alias length size
+
         def destroy_all
-          doc_refs = get_records.map(&:doc_ref)
+          doc_refs = self.map(&:doc_ref)
           fire_record_class.delete_in_batch(doc_refs)
         end
 
         def first(limit = 1)
-          records = get_records(limit: limit)
+          records = limit(limit)
           limit == 1 ? records[0] : records
         end
 

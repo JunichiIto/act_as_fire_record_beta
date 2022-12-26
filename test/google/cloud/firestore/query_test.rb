@@ -12,12 +12,12 @@ module Google
         end
 
         test '#get_records' do
-          books = Book.where(:page, :>=, 220).order(:page).get_records
+          books = Book.where(:page, :>=, 220).order(:page)
           book_ids = [@book_2, @book_3].map(&:id)
           found_ids = books.map(&:id)
           assert_equal book_ids, found_ids
 
-          books = Book.where(:page, :>=, 220).get_records(limit: 1)
+          books = Book.where(:page, :>=, 220).limit(1)
           assert_equal 1, books.size
           found_id = books[0].id
           assert_includes book_ids, found_id
@@ -26,7 +26,7 @@ module Google
         test '#destroy_all' do
           Book.where(:page, :>=, 220).destroy_all
 
-          books = Book.all.get_records
+          books = Book.all
           assert_equal [@book_1.id], books.map(&:id)
         end
 
