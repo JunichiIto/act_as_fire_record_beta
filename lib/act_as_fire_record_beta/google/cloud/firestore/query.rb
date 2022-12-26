@@ -4,11 +4,11 @@ module Google
       class Query
         include Enumerable
 
-        def each(&)
+        def each(&b)
           records = get.map do |data|
             fire_record_class.to_instance(data)
           end
-          records.each(&)
+          records.each(&b)
         end
 
         def [](nth)
