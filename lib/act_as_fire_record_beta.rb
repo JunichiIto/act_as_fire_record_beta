@@ -81,7 +81,7 @@ module ActAsFireRecordBeta
     end
 
     def first(limit = 1)
-      records = col.limit(limit).to_a
+      records = col.limit(limit)
       limit == 1 ? records[0] : records
     end
 
