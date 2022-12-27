@@ -153,7 +153,7 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
 
   test "create" do
     Book.create(title: 'An Awesome Book', published_on: '2022-12-01'.to_date, page: 200)
-    assert_equal 1, Book.all.count
+    assert_equal 1, Book.count
   end
 end
 ```
@@ -168,7 +168,7 @@ RSpec.describe Book, type: :model do
   
   it "creates new record" do
     Book.create(title: 'An Awesome Book', published_on: '2022-12-01'.to_date, page: 200)
-    expect(Book.all.count).to eq 1
+    expect(Book.count).to eq 1
   end
 end
 ```
