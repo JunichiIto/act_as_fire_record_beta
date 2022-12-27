@@ -4,9 +4,9 @@ module Google
       class Query
         include Enumerable
 
-        def method_missing(symbol, *args)
-          if respond_to_missing?(symbol, false)
-            self.to_a.send(symbol, *args)
+        def method_missing(sym, *args)
+          if respond_to_missing?(sym, false)
+            self.to_a.send(sym, *args)
           else
             super
           end

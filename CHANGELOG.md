@@ -1,6 +1,6 @@
 ## Next
 - Remove `get_records` method. Now records can be retrieved without it.
-- Delegate to Array on method missing for Google::Cloud::Firestore::Query (e.g. `query.size`, `query.empty?`, etc).
+- Delegate to Array on method missing for Google::Cloud::Firestore::Query. You can call `query.size`, `query.empty?` and so on.
 - Add `count` method to model class. (e.g. `Book.count`)
 
 ## v0.0.8 - 2022-11-24
