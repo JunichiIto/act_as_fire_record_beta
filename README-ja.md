@@ -120,13 +120,13 @@ book.destroy
 ```ruby
 book = Book.find_by(title: 'An Awesome Book')
 
-books = Book.all.get_records
+books = Book.all
 
-books = Book.order(:title).get_records
-books = Book.order(:title, :desc).get_records
+books = Book.order(:title)
+books = Book.order(:title, :desc)
 
-books = Book.where(:page, :>=, 200).get_records
-books = Book.where(:page, :>=, 200).order(:page).get_records
+books = Book.where(:page, :>=, 200)
+books = Book.where(:page, :>=, 200).order(:page)
 ```
 
 上記以外のAPIの使用例はテストコードを参照してください。
@@ -137,7 +137,6 @@ books = Book.where(:page, :>=, 200).order(:page).get_records
 ## 注意点・制約事項
 
 - `order`メソッドや`where`メソッドは[`Google::Cloud::Firestore::Query`](https://www.rubydoc.info/gems/google-cloud-firestore/2.7.2/Google/Cloud/Firestore/Query)をそのまま使っているため、引数の指定方法がActiveRecordと異なります。
-- ActiveRecordとは異なり、`all`や`where`、`order`を指定した場合は最後に`get_records`メソッドを呼ばないとデータを取得できません。
 - 指定可能な検索条件には制約があります。具体的にはFirestoreや[google-cloud-firestore](https://rubygems.org/gems/google-cloud-firestore)の制約がそのまま当てはまります。
 
 ## テストコードを書く場合の注意点

@@ -22,12 +22,12 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
     book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
     book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-01'.to_date, page: 200)
 
-    books = Book.all.get_records.sort_by(&:title)
+    books = Book.all.sort_by(&:title)
     assert_equal 2, books.size
     assert_equal book_1.id, books[0].id
     assert_equal book_2.id, books[1].id
 
-    books = Book.all.order(:title, :desc).get_records
+    books = Book.all.order(:title, :desc)
     assert_equal 2, books.size
     assert_equal book_2.id, books[0].id
     assert_equal book_1.id, books[1].id
@@ -72,16 +72,16 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
     book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
     book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
 
-    books = Book.where(:title, :==, 'A Day In The Life').get_records
+    books = Book.where(:title, :==, 'A Day In The Life')
     assert_equal 1, books.size
     assert_equal book_1.id, books[0].id
 
-    books = Book.where(:page, :<=, 210).get_records.sort_by(&:title)
+    books = Book.where(:page, :<=, 210).sort_by(&:title)
     assert_equal 2, books.size
     assert_equal book_1.id, books[0].id
     assert_equal book_2.id, books[1].id
 
-    books = Book.where(:page, :<, 210).get_records
+    books = Book.where(:page, :<, 210)
     assert_equal 1, books.size
     assert_equal book_1.id, books[0].id
   end
@@ -90,12 +90,12 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
     book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
     book_2 = Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
 
-    books = Book.order(:title).get_records
+    books = Book.order(:title)
     assert_equal 2, books.size
     assert_equal book_1.id, books[0].id
     assert_equal book_2.id, books[1].id
 
-    books = Book.order(:title, :desc).get_records
+    books = Book.order(:title, :desc)
     assert_equal 2, books.size
     assert_equal book_2.id, books[0].id
     assert_equal book_1.id, books[1].id
@@ -106,6 +106,15 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
 
     found_book = Book.first
     assert_equal book.id, found_book.id
+  end
+
+  test '.count' do
+    assert_equal 0, Book.count
+
+    Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
+
+    assert_equal 2, Book.count
   end
 
   test '.create' do
@@ -129,10 +138,10 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   test '.destroy_all' do
     Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
     Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
-    assert_equal 2, Book.all.get_records.count
+    assert_equal 2, Book.count
 
     Book.destroy_all
-    assert_equal 0, Book.all.get_records.count
+    assert_equal 0, Book.count
   end
 
   test '.logger' do
@@ -233,11 +242,11 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   test '#destroy' do
     book = Book.create!(title: 'An Awesome Book', published_on: '2022-12-01'.to_date, page: 200)
 
-    assert_equal 1, Book.all.get_records.count
+    assert_equal 1, Book.count
 
     book.destroy
 
-    assert_equal 0, Book.all.get_records.count
+    assert_equal 0, Book.count
   end
 
   test '#logger' do

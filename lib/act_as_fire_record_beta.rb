@@ -81,8 +81,11 @@ module ActAsFireRecordBeta
     end
 
     def first(limit = 1)
-      records = col.get_records(limit: limit)
-      limit == 1 ? records[0] : records
+      all.first(limit)
+    end
+
+    def count
+      all.count
     end
 
     def create(params)
