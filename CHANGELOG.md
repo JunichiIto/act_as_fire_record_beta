@@ -1,4 +1,5 @@
 ## Next
+- Implement `inspect` and `pretty_print` for Google::Cloud::Firestore::Query.
 ## v0.0.9 - 2022-12-27
 - Remove `get_records` method. Now records can be retrieved without it.
 - Delegate to Array on method missing for Google::Cloud::Firestore::Query. You can call `query.size`, `query.empty?` and so on.

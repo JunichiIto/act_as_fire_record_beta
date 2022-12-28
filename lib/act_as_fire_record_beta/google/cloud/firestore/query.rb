@@ -25,6 +25,15 @@ module Google
           b ? records : records.each
         end
 
+        def inspect
+          entries = self.to_a.map(&:inspect)
+          "#<#{self.class.name} [#{entries.join(', ')}]>"
+        end
+
+        def pretty_print(q)
+          q.pp(self.to_a)
+        end
+
         def destroy_all
           doc_refs = self.map(&:doc_ref)
           fire_record_class.delete_in_batch(doc_refs)

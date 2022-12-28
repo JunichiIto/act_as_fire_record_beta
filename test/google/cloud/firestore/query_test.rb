@@ -47,6 +47,26 @@ module Google
           assert_raises(NoMethodError) { books.hoge }
         end
 
+        test '#inspect' do
+          books = Book.where(:page, :>=, 220).order(:page)
+          expected = /\A#<Google::Cloud::Firestore::Query \[#<Book :id=>"\w+", :created_at=>[-\d:. +]+, :updated_at=>[-\d:. +]+, :title=>"My 2nd Book", :published_on=>Fri, 02 Dec 2022, :page=>220>, #<Book :id=>"\w+", :created_at=>[-\d:. +]+, :updated_at=>[-\d:. +]+, :title=>"My 3rd Book", :published_on=>Sat, 03 Dec 2022, :page=>230>\]>\z/
+          assert_match expected, books.inspect
+
+          books = Book.where(:page, :>, 230)
+          expected = "#<Google::Cloud::Firestore::Query []>"
+          assert_equal expected, books.inspect
+        end
+
+        test '#pretty_print' do
+          books = Book.where(:page, :>=, 220).order(:page)
+          expected = /\A\[#<Book :id=>"\w+", :created_at=>[-\d:. +]+, :updated_at=>[-\d:. +]+, :title=>"My 2nd Book", :published_on=>Fri, 02 Dec 2022, :page=>220>,\n #<Book :id=>"\w+", :created_at=>[-\d:. +]+, :updated_at=>[-\d:. +]+, :title=>"My 3rd Book", :published_on=>Sat, 03 Dec 2022, :page=>230>\]\n\z/
+          assert_output(expected) { pp books }
+
+          books = Book.where(:page, :>, 230)
+          expected = "[]\n"
+          assert_output(expected) { pp books }
+        end
+
         test '#destroy_all' do
           Book.where(:page, :>=, 220).destroy_all
 
