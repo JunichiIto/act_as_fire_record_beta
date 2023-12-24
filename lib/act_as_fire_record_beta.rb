@@ -33,8 +33,12 @@ module ActAsFireRecordBeta
     extend Forwardable
     delegate :logger => Rails
 
-    # Get private constant
-    NO_DEFAULT_PROVIDED = ActiveModel::Attributes::ClassMethods.const_get(:NO_DEFAULT_PROVIDED)
+    if ActiveModel::Attributes::ClassMethods.const_defined?(:NO_DEFAULT_PROVIDED)
+      NO_DEFAULT_PROVIDED = ActiveModel::Attributes::ClassMethods.const_get(:NO_DEFAULT_PROVIDED)
+    else
+      # for Rails 7.1
+      NO_DEFAULT_PROVIDED = nil
+    end
 
     def firestore_attribute(name, cast_type = nil, default: NO_DEFAULT_PROVIDED, **options)
       attribute(name, cast_type, default: default, **options)
