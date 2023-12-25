@@ -149,7 +149,7 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '.logger' do
-    assert_instance_of ActiveSupport::Logger, Book.logger
+    assert_instance_of ActiveSupport::BroadcastLogger, Book.logger
   end
 
   test 'default attributes' do
@@ -254,7 +254,7 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
   end
 
   test '#logger' do
-    assert_instance_of ActiveSupport::Logger, Book.new.logger
+    assert_instance_of ActiveSupport::BroadcastLogger, Book.new.logger
   end
 
   test 'validation callbacks' do
