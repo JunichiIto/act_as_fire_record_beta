@@ -101,8 +101,16 @@ class ActAsFireRecordBetaTest < ActiveSupport::TestCase
     assert_equal book_1.id, books[1].id
   end
 
+  test 'where + order' do
+    book_1 = Book.create!(title: 'A Day In The Life', published_on: '2022-12-01'.to_date, page: 200)
+    Book.create!(title: 'Blackbird', published_on: '2022-12-02'.to_date, page: 210)
+
+    found_book = Book.where(:page, :<=, 210).order(:title).first
+    assert_equal book_1.id, found_book.id
+  end
+
   test 'invalid query' do
-    assert_raises(GRPC::InvalidArgument) { Book.where(:page, :<=, 210).order(:title).first }
+    assert_raises(GRPC::InvalidArgument) { Book.where(:title, :!=, 'Blackbird').where(:page, :!=, 200).first }
   end
 
   test '.first' do
